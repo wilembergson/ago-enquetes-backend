@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Medico {
+  id       String     @id @db.Uuid()
+  nome     String
+  crm      String     @unique()
+  respostas Resposta[]
+
+  @@map("medico")
+}
+
+model Enquete {
+  id                     String     @id @db.Uuid()
+  pergunta               String
+  tempo_segundos         Int
+  ativo                  Boolean
+  respostas              Resposta[]
+
+  @@map("enquetes")
+}
+
+model Resposta {
+  id            String     @id @db.Uuid()
+  conteudo      String
+  crm           String     @unique()
+  medico        Medico     @relation(fields: [crm], references: [crm])
+  id_enquete    String     @db.Uuid()
+  enquete       Enquete    @relation(fields: [id_enquete], references: [id])
+
+  @@map("respostas")
+}
