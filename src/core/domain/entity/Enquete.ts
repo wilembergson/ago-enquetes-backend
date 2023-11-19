@@ -46,7 +46,7 @@ export namespace Enquete {
     }
 
     export type GetState = {
-        id: String;
+        id: string;
         pergunta: string;
         tempo_segundos: number;
         ativo: boolean;

@@ -6,16 +6,37 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES2021",
+    "target": "ESNext",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
-    "strictNullChecks": false,
+    "strictNullChecks": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@domain/*": [
+        "./src/core/domain/*"
+      ],
+      "@application/*": [
+        "src/core/application/*"
+      ],
+      "@infra/*": [
+        "src/core/infra/*"
+      ],
+      "~/test/*": [
+        "./test/*"
+      ]
+    },
+  },
+  "include": [
+    "src",
+    "test",
+    "jest.config.js",
+    ".eslintrc.js",
+    "prisma/seed.ts"
+  ]
 }
