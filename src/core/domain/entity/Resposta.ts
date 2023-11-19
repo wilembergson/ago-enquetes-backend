@@ -5,7 +5,6 @@ import { ID } from "./id";
 export class Resposta{
     private readonly id: ID
     private readonly conteudo: string
-    private readonly crm: string
     private medico: Medico
     private enquete: Enquete
 
@@ -18,7 +17,8 @@ export class Resposta{
         return {
             id: this.id.value,
             conteudo: this.conteudo,
-            crm: this.crm
+            crm: this.medico.getState().crm,
+            id_enquete: this.enquete.getState().id
         }
     }
 
@@ -44,12 +44,12 @@ export namespace Resposta {
     export type Constructor = {
         id?: string;
         conteudo: string;
-        crm: string
     }
 
     export type GetState = {
-        id: String
+        id: string
         conteudo: string
         crm: string
+        id_enquete: string
     }
 }

@@ -8,6 +8,7 @@ export class Medico{
     constructor(input: Medico.Constructor){
         this.id = new ID(input.id)
         this.nome = input.nome
+        this.crm = input.crm
     }
 
     getState(): Medico.GetState{

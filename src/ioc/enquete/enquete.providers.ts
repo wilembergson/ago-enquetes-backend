@@ -42,3 +42,5 @@ export const providers: Provider[] = [
     atualizarSatusEnqueteProvider,
     buscarEnqueteAtivaProvider
 ]
+
+export const providersExporteds: Provider[] = [enqueteRepositoryProvider];

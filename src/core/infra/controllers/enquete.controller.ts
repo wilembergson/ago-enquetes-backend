@@ -6,7 +6,7 @@ import { CriarEnqueteDTO } from "./dto/enquete";
 import { Enquete } from "@domain/entity";
 
 @Controller('enquete')
-export class EnqueteController{
+export class EnqueteController {
     constructor(
         @Inject(EnqueteDependencies.CriarEnquete)
         private readonly criarEnquete: CriarEnquete,
@@ -14,30 +14,30 @@ export class EnqueteController{
         private readonly atualizarStatus: AtualizarStatus,
         @Inject(EnqueteDependencies.BuscarAtiva)
         private readonly buscarAtiva: BuscarAtiva,
-    ){}
+    ) { }
 
     @Post()
-    async criarNovaEnquete(@Res() res: Response, @Body() body: CriarEnqueteDTO): Promise<void>{
+    async criarNovaEnquete(@Res() res: Response, @Body() body: CriarEnqueteDTO): Promise<void> {
         await this.criarEnquete.execute({
             pergunta: body.pergunta,
             tempo_segundos: parseInt(body.tempo_segundos)
         })
         res.status(201).send({
-            message:"Enquete criada!"
+            message: "Enquete criada!"
         })
     }
 
     @Put(':id')
-    async atualizarStatusEnquete(@Res() res: Response, @Param() param): Promise<void>{
+    async atualizarStatusEnquete(@Res() res: Response, @Param() param): Promise<void> {
         await this.atualizarStatus.execute(param.id)
         res.status(200).send({
-            message:"Enquete encerrada!"
+            message: "Enquete encerrada!"
         })
     }
 
     @Get('/ativa')
-    async buscarEnqueteAtiva(): Promise<Enquete.GetState | null>{
+    async buscarEnqueteAtiva(): Promise<Enquete.GetState | null> {
         return await this.buscarAtiva.execute()
-       
+
     }
 }

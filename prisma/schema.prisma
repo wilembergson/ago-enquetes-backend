@@ -29,7 +29,7 @@ model Enquete {
 model Resposta {
   id            String     @id @db.Uuid()
   conteudo      String
-  crm           String     @unique()
+  crm           String     
   medico        Medico     @relation(fields: [crm], references: [crm])
   id_enquete    String     @db.Uuid()
   enquete       Enquete    @relation(fields: [id_enquete], references: [id])
