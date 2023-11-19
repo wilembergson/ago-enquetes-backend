@@ -6,6 +6,21 @@ import { PrismaClient } from "@prisma/client";
 export class EnqueteRepositoryPrisma implements EnqueteRepository{
     constructor(private readonly database: Database<PrismaClient>) { }
     
+    async findActive(): Promise<Enquete | null> {
+        const result = await this.database.getConnection().enquete.findFirst({
+            where:{
+                ativo: true
+            }
+        })
+        if(!result) return null
+        return new Enquete({
+            id: result.id,
+            pergunta: result.pergunta,
+            tempo_segundos: result.tempo_segundos,
+            ativo: result.ativo
+        })
+    }
+    
     async findById(id: string): Promise<Enquete> {
         const result = await this.database.getConnection().enquete.findFirst({
             where:{

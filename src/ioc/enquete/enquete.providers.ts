@@ -1,8 +1,8 @@
 import { ClassProvider, FactoryProvider, Provider } from "@nestjs/common";
 import { EnqueteRepositoryPrisma } from "@infra/repository";
-import { AtualizarStatusUseCase, CriarEnqueteUseCase } from "@application/use-cases/enquete";
+import { AtualizarStatusUseCase, BuscarAtivaUseCase, CriarEnqueteUseCase } from "@application/use-cases/enquete";
 import { EnqueteRepository } from "@domain/repository";
-import { AtualizarStatus, CriarEnquete } from "@domain/use-cases/enquete";
+import { AtualizarStatus, BuscarAtiva, CriarEnquete } from "@domain/use-cases/enquete";
 import { Database, PrismaDatabase } from "@infra/database";
 import { EnqueteDependencies } from "./enquete.dependencies";
 
@@ -29,9 +29,16 @@ const atualizarSatusEnqueteProvider: FactoryProvider<AtualizarStatus> = {
     inject: [EnqueteDependencies.EnqueteRepository]
 };
 
+const buscarEnqueteAtivaProvider: FactoryProvider<BuscarAtiva> = {
+    provide: EnqueteDependencies.BuscarAtiva,
+    useFactory: (enqueteRepository: EnqueteRepository) => new BuscarAtivaUseCase(enqueteRepository),
+    inject: [EnqueteDependencies.EnqueteRepository]
+}
+
 export const providers: Provider[] = [
     databaseProvider,
     enqueteRepositoryProvider,
     criarEnqueteProvider,
-    atualizarSatusEnqueteProvider
+    atualizarSatusEnqueteProvider,
+    buscarEnqueteAtivaProvider
 ]

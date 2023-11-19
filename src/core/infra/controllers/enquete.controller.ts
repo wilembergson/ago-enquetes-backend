@@ -1,8 +1,9 @@
 import { Response } from "express";
-import { Controller, Inject, Post, Body, Res, Put, Param } from "@nestjs/common";
-import { AtualizarStatus, CriarEnquete } from "@domain/use-cases/enquete";
+import { Controller, Inject, Post, Body, Res, Put, Param, Get } from "@nestjs/common";
+import { AtualizarStatus, BuscarAtiva, CriarEnquete } from "@domain/use-cases/enquete";
 import { EnqueteDependencies } from "src/ioc/enquete";
 import { CriarEnqueteDTO } from "./dto/enquete";
+import { Enquete } from "@domain/entity";
 
 @Controller('enquete')
 export class EnqueteController{
@@ -11,6 +12,8 @@ export class EnqueteController{
         private readonly criarEnquete: CriarEnquete,
         @Inject(EnqueteDependencies.AtualizarStatus)
         private readonly atualizarStatus: AtualizarStatus,
+        @Inject(EnqueteDependencies.BuscarAtiva)
+        private readonly buscarAtiva: BuscarAtiva,
     ){}
 
     @Post()
@@ -23,12 +26,18 @@ export class EnqueteController{
             message:"Enquete criada!"
         })
     }
-    
+
     @Put(':id')
     async atualizarStatusEnquete(@Res() res: Response, @Param() param): Promise<void>{
         await this.atualizarStatus.execute(param.id)
         res.status(200).send({
-            message:"Enquete desativada!"
+            message:"Enquete encerrada!"
         })
+    }
+
+    @Get('/ativa')
+    async buscarEnqueteAtiva(): Promise<Enquete.GetState | null>{
+        return await this.buscarAtiva.execute()
+       
     }
 }
