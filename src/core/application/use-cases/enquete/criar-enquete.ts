@@ -1,6 +1,6 @@
-import { Enquete } from "src/core/domain/entity";
-import { EnqueteRepository } from "src/core/domain/repository";
-import { CriarEnquete } from "src/core/domain/use-cases/enquete";
+import { Enquete } from "@domain/entity"
+import { EnqueteRepository } from "@domain/repository"
+import { CriarEnquete } from "@domain/use-cases/enquete"
 
 export class CriarEnqueteUseCase implements CriarEnquete{
     constructor(private readonly enqueteRepository: EnqueteRepository){}

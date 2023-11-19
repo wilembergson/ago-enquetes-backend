@@ -1,5 +1,6 @@
 export enum EnqueteDependencies {
     EnqueteRepository = 'EnqueteRepository',
     Database = 'Database',
-    CriarEnquete = 'CriarEnquete'
+    CriarEnquete = 'CriarEnquete',
+    AtualizarStatus = 'AtualizarStatus'
 }

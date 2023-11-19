@@ -1,5 +1,5 @@
-import { Resposta } from "./Resposta";
-import { ID } from "./id";
+import { Resposta } from "./Resposta"
+import { ID } from "./id"
 
 export class Enquete{
     private readonly id: ID

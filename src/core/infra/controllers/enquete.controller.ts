@@ -1,14 +1,16 @@
-import { Controller, Inject, Post, Body, Res } from "@nestjs/common";
 import { Response } from "express";
-import { EnqueteDependencies } from "src/ioc/enquete/enquete.dependencies";
+import { Controller, Inject, Post, Body, Res, Put, Param } from "@nestjs/common";
+import { AtualizarStatus, CriarEnquete } from "@domain/use-cases/enquete";
+import { EnqueteDependencies } from "src/ioc/enquete";
 import { CriarEnqueteDTO } from "./dto/enquete";
-import { CriarEnquete } from "src/core/domain/use-cases/enquete";
 
 @Controller('enquete')
 export class EnqueteController{
     constructor(
         @Inject(EnqueteDependencies.CriarEnquete)
         private readonly criarEnquete: CriarEnquete,
+        @Inject(EnqueteDependencies.AtualizarStatus)
+        private readonly atualizarStatus: AtualizarStatus,
     ){}
 
     @Post()
@@ -19,6 +21,14 @@ export class EnqueteController{
         })
         res.status(201).send({
             message:"Enquete criada!"
+        })
+    }
+    
+    @Put(':id')
+    async atualizarStatusEnquete(@Res() res: Response, @Param() param): Promise<void>{
+        await this.atualizarStatus.execute(param.id)
+        res.status(200).send({
+            message:"Enquete desativada!"
         })
     }
 }
